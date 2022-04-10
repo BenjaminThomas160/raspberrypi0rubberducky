@@ -9,8 +9,15 @@ enter
 space
 left_arrow
 enter
-admin_powershell
+powershell
+admin_enter
 left_arrow
 enter
 payload
 enter
+minimise
+alt_f4
+powershell
+string start microsoft-edge:https://www.youtube.com/watch?v=dQw4w9WgXcQ
+enter
+minimise
