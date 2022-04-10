@@ -1,0 +1,16 @@
+win_key
+string virus and threat protection
+enter
+tab
+tab
+tab
+tab
+enter
+space
+left_arrow
+enter
+admin_powershell
+left_arrow
+enter
+payload
+enter
