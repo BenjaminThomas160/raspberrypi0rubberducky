@@ -159,7 +159,7 @@ def arrow_key(left):
     write_report(NULL_CHAR*8)
 
 def send_reverse_payload():
-    lines = open('reverse_shell_payload.txt', 'r')
+    lines = open('/home/pi/raspberypi0rubberducky/reverse_shell_payload.txt', 'r')
     l = lines.readlines()
     print(l)
     for i in l[0]:
@@ -172,7 +172,7 @@ def alt_f4():
     write_report(chr(4) + NULL_CHAR + chr(61) + NULL_CHAR*5)
     write_report(NULL_CHAR*8)
 
-payload = open('payload.txt', 'r')
+payload = open('/home/pi/raspberypi0rubberducky/payload.txt', 'r')
 lines = payload.readlines()
 for l in lines:
     write_report(NULL_CHAR*8)

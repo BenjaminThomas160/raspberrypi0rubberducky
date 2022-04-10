@@ -20,4 +20,3 @@ alt_f4
 powershell
 string start microsoft-edge:https://www.youtube.com/watch?v=dQw4w9WgXcQ
 enter
-minimise
