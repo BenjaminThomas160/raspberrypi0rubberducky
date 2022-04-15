@@ -162,7 +162,7 @@ def arrow_key(left):
 
 
 def send_reverse_payload():
-    lines = open('/home/pi/raspberypi0rubberducky/rasp_payload.txt', 'r')
+    lines = open('/home/pi/raspberrypi0rubberducky/rasp_payload.txt', 'r')
     l = lines.readlines()
     print(l)
     for i in l[0]:
@@ -179,7 +179,7 @@ def alt_f4():
     write_report(NULL_CHAR*8)
 
 
-payload = open('/home/pi/raspberypi0rubberducky/payload.txt', 'r')
+payload = open('/home/pi/raspberrypi0rubberducky/payload.txt', 'r')
 lines = payload.readlines()
 for l in lines:
     write_report(NULL_CHAR*8)
