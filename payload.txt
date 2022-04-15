@@ -2,6 +2,7 @@ win_key
 string virus and threat protection
 enter
 sleep
+sleep
 tab
 tab
 tab
@@ -14,6 +15,8 @@ alt_f4
 sleep
 cmd
 admin_enter
+sleep
+sleep
 left_arrow
 enter
 payload
