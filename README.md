@@ -1,5 +1,7 @@
 # raspberypi0rubberducky
-Rubber ducky raspberry pi 0 reverse shell 
+Rubber ducky raspberry pi 0 reverse shell
+
+https://youtu.be/kGRURNj0txs -- Link to demonstration video
 
 This project executes a reverse shell on a windows 10 computer.
 The file payload.ps1 needs to be on a computer which is port forwarded, 
